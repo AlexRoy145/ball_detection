@@ -1,3 +1,5 @@
+import logging
+import coloredlogs
 from detective import Detective
 
 
@@ -13,11 +15,13 @@ def main() -> int:
     1000 -> function exited by user
     2000 -> function crashed unexpectedly
     """
+    coloredlogs.install()
 
     detective = Detective()
     detective.setup()
     detective.start()
-    return 1001
+    logging.info("1000")
+    return 1000
 
 
 if __name__ == "__main__":
