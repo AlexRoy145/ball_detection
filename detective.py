@@ -41,7 +41,7 @@ class Detective:
         """
 
         # setup the detection zone
-        print("test active")
+        print("Select ball detection zone")
         listener = None
 
         def on_click(x, y, _, pressed):
@@ -58,6 +58,7 @@ class Detective:
 
         # take the average brightness of the area when no ball is present
         print("taking average brightness of the area")
+        # TODO look at moving monitor to parameter
         monitor = {
             "top": self.crime_scene[0][1],
             "left": self.crime_scene[0][0],
@@ -79,6 +80,7 @@ class Detective:
                 avg_bright_one_frame = sum(avg_bright_one_frame) / len(avg_bright_one_frame)
                 avg_bright_thirty_frame.append(avg_bright_one_frame)
             self.avg_brightness_of_detection_window = sum(avg_bright_thirty_frame)/len(avg_bright_thirty_frame)
+            print("average brightness detected")
             return 1001
 
     def start(self) -> int:
@@ -115,7 +117,8 @@ class Detective:
                     # below float controls how sensitive the detective is, play with at your discretion
                     if average_brightness_of_frame > self.avg_brightness_of_detection_window + 4.5:
                         time_second = time_ns()
-                        if time_second - time_first > 400000000:
+                        # below int is responsible for stopping multiple readings per pass
+                        if time_second - time_first > 50000000:
                             keyboard.press("z")
                             time_first = time_second
             except KeyboardInterrupt:
